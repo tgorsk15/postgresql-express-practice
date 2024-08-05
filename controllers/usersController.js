@@ -13,7 +13,6 @@ const validateUser = [
 exports.logUsersGet = asyncHandler(async (req, res) => {
     
     const usernames = await db.getAllUsernames();
-    console.log('usernames: ', usernames)
     const results = "Usernames: " + usernames.map(user => user.username).join(", ")
     res.render("index", {
         usernames: results,
@@ -38,7 +37,6 @@ exports.newUserPost = [
       }
       const { userName } = req.body;
       await db.insertUsername(userName);
-      console.log(`username to be saved: ${req.body.userName}`)
       res.redirect("/")
     })
 ];
@@ -53,7 +51,7 @@ exports.searchUsersPost = async (req, res) => {
     try {
         const queryName = req.body.queryName.toLowerCase()
         const results = await db.searchUserName(queryName)
-        console.log(results)
+        // console.log(results)
 
         res.render("search", {
             title: "Search",
@@ -64,3 +62,12 @@ exports.searchUsersPost = async (req, res) => {
     }
     
 }
+
+exports.deleteUsersGet = async (req, res) => {
+    try {
+        await db.deleteUsers();
+        res.redirect("/")
+    } catch (error) {
+        console.log(error)
+    }
+} 

@@ -19,8 +19,18 @@ async function searchUserName(queryName) {
     return searchResult.rows
 }
 
+async function deleteUsers() {
+    await pool.query(`
+        TRUNCATE usernames;
+        DELETE FROM usernames;
+    `)
+
+    // console.log(await pool.query("SELECT * FROM usernames"))
+}
+
 module.exports = {
     getAllUsernames,
     insertUsername,
-    searchUserName
+    searchUserName,
+    deleteUsers
 }
