@@ -11,5 +11,12 @@
         <button type="submit">Search</button>
     </form>
     <a href="/">Back to home</a>
+
+    <br>
+    <% if (locals.results)  {%>
+        <% results.forEach(result => { %>
+            <h3> Name: <%= result.username %> </h3>
+        <% }); %>
+    <% } %>
   </body>
 </html>

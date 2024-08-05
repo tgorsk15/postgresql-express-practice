@@ -10,7 +10,13 @@ async function insertUsername(username) {
 }
 
 async function searchUserName(queryName) {
-
+    const searchResult = await pool.query(`
+        SELECT username FROM usernames
+        WHERE LOWER(username) LIKE $1
+    `, [`%${queryName}%`]);
+    
+    console.log(searchResult)
+    return searchResult.rows
 }
 
 module.exports = {

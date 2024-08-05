@@ -51,8 +51,14 @@ exports.searchUsersGet = async (req, res) => {
 
 exports.searchUsersPost = async (req, res) => {
     try {
-        const queryName = req.body.queryName
-        console.log(queryName)  
+        const queryName = req.body.queryName.toLowerCase()
+        const results = await db.searchUserName(queryName)
+        console.log(results)
+
+        res.render("search", {
+            title: "Search",
+            results: results
+        })
     } catch (error) {
         console.log(error)
     }
