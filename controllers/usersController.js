@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler")
+const db = require("../dbs/queries")
 
 const { body, validationResult } = require("express-validator");
 
@@ -10,8 +11,13 @@ const validateUser = [
 ]
 
 exports.logUsersGet = asyncHandler(async (req, res) => {
-    console.log('usernames being logged here - wip')
-    res.render("index")
+    
+    const usernames = await db.getAllUsernames();
+    console.log('usernames: ', usernames)
+    const results = "Usernames: " + usernames.map(user => user.username).join(", ")
+    res.render("index", {
+        usernames: results,
+    })
 })
 
 exports.newUserGet = asyncHandler(async (req, res) => {
@@ -24,13 +30,14 @@ exports.newUserPost = [
     validateUser,
     asyncHandler(async (req, res) => {
       const errors = validationResult(req);
-      console.log(errors)
       if (!errors.isEmpty()) {
         return res.status(400).render("new", {
           title: "Add a New user",
           errors: errors.array(),
         });
       }
+      const { userName } = req.body;
+      await db.insertUsername(userName);
       console.log(`username to be saved: ${req.body.userName}`)
       res.redirect("/")
     })
