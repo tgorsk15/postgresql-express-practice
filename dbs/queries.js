@@ -9,7 +9,12 @@ async function insertUsername(username) {
     await pool.query("INSERT INTO usernames (username) VALUES ($1)", [username])
 }
 
+async function searchUserName(queryName) {
+
+}
+
 module.exports = {
     getAllUsernames,
-    insertUsername
+    insertUsername,
+    searchUserName
 }

@@ -41,4 +41,20 @@ exports.newUserPost = [
       console.log(`username to be saved: ${req.body.userName}`)
       res.redirect("/")
     })
-]
+];
+
+exports.searchUsersGet = async (req, res) => {
+    res.render("search", {
+        title: "Search",
+    })
+}
+
+exports.searchUsersPost = async (req, res) => {
+    try {
+        const queryName = req.body.queryName
+        console.log(queryName)  
+    } catch (error) {
+        console.log(error)
+    }
+    
+}
